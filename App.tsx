@@ -532,10 +532,10 @@ function AppRoot() {
         </Text>
       </Card>
       <View style={S.metricGrid}>
-        {metricCard(metric('TEMPERATURE', env.temperature_c, '°C'))}
-        {metricCard(metric('HUMIDITY', env.humidity_rh, '%'))}
-        {metricCard(metric('MQ-2 · RAW ADC', env.mq2_adc, ''))}
-        {metricCard(metric('MQ-135 · RAW ADC', env.mq135_adc, ''))}
+        {metricCard('temperature', metric('TEMPERATURE', env.temperature_c, '°C'))}
+        {metricCard('humidity', metric('HUMIDITY', env.humidity_rh, '%'))}
+        {metricCard('mq2', metric('MQ-2 · RAW ADC', env.mq2_adc, ''))}
+        {metricCard('mq135', metric('MQ-135 · RAW ADC', env.mq135_adc, ''))}
       </View>
       <Section>FIRMWARE HAZARD FLAGS</Section>
       <Card>
@@ -893,9 +893,9 @@ function AppRoot() {
       )}
     </View>
   );
-  function metricCard(child: any) {
+  function metricCard(key: string, child: any) {
     return (
-      <Card style={S.metricCard} key={String(child?.props?.children?.[0])}>
+      <Card style={S.metricCard} key={key}>
         {child}
       </Card>
     );

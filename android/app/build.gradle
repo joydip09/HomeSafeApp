@@ -89,7 +89,7 @@ android {
     buildTypes {
         debug {}
         release {
-            // Configure a private release signing key before publishing.
+            signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }

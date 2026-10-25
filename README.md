@@ -19,6 +19,32 @@ The app uses React Native Community CLI 20.2.0 / React Native 0.88.0. Install de
 4. In the app, open the gear on Home, enter the ESP32's current IP address, keep port `81`, and save. Tap **Connect**.
 5. The app reports synchronized only after it receives a valid protocol v1 state snapshot.
 
+For a debug build, start Metro in one terminal, then build and install the APK from a second terminal:
+
+```bash
+# Terminal 1: keep Metro running while using the debug app.
+npm start
+
+# Terminal 2:
+adb devices
+cd android
+./gradlew assembleDebug
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+cd ..
+```
+
+For a release build, no Metro server is needed because the JavaScript bundle is included in the APK:
+
+```bash
+adb devices
+cd android
+./gradlew assembleRelease
+adb install -r app/build/outputs/apk/release/app-release.apk
+cd ..
+```
+
+Accept the USB debugging prompt on the phone if it appears. The `-r` option reinstalls the APK while preserving the app's local data. The current release build uses the debug signing configuration and is intended for local/device testing, not Play Store distribution.
+
 Use the device's current IP address; it may change between networks or DHCP leases. The endpoint is `ws://<IP>:81`. Android cleartext traffic is enabled for this local WebSocket endpoint.
 
 ## App behavior

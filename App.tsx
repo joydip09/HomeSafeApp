@@ -15,6 +15,7 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import { DeviceConnection, Link } from './src/connection';
+import { parseConnectionTarget } from './src/connectionUrl';
 import {
   applyState,
   AppEvent,
@@ -282,24 +283,22 @@ function AppRoot() {
     };
   }, [prefs.notifications]);
   const url = useMemo(() => {
-    const host = prefs.ip.trim();
-    if (!host) return '';
-    return `ws://${host}:${prefs.port || '81'}`;
+    try {
+      return parseConnectionTarget(prefs.ip, prefs.port || '81').url;
+    } catch {
+      return '';
+    }
   }, [prefs]);
   const start = () => {
-    const octets = prefs.ip.trim().split('.');
-    if (
-      octets.length !== 4 ||
-      octets.some(part => !/^\d{1,3}$/.test(part) || +part > 255) ||
-      !/^\d{1,5}$/.test(prefs.port) ||
-      +prefs.port < 1 ||
-      +prefs.port > 65535
-    ) {
-      setNotice('Enter a valid IPv4 address and WebSocket port');
+    let target: string;
+    try {
+      target = parseConnectionTarget(prefs.ip, prefs.port || '81').url;
+    } catch (e) {
+      setNotice(String(e instanceof Error ? e.message : e));
       setSettings(true);
       return;
     }
-    conn.current.connect(url, prefs.autoReconnect);
+    conn.current.connect(target, prefs.autoReconnect);
     setSettings(false);
   };
   const command = (name: string, data?: object) => {
@@ -816,12 +815,12 @@ function AppRoot() {
             </View>
             <ScrollView keyboardShouldPersistTaps="handled">
               <Text style={S.section}>DEVICE CONNECTION</Text>
-              <Text style={S.label}>ESP32 IP address</Text>
+              <Text style={S.label}>ESP32 IPv4 address or public HTTPS URL</Text>
               <TextInput
                 value={draft.ip}
                 onChangeText={v => updatePrefs('ip', v)}
-                placeholder="e.g. 192.168.1.50"
-                keyboardType="numbers-and-punctuation"
+                placeholder="192.168.1.50 or https://tunnel.example"
+                keyboardType="url"
                 autoCapitalize="none"
                 style={S.input}
               />

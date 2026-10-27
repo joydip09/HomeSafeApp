@@ -16,7 +16,7 @@ The app uses React Native Community CLI 20.2.0 / React Native 0.88.0. Install de
 1. Connect the phone and ESP32 to the same local Wi-Fi network, or connect the ESP32 to the phone hotspot in station mode.
 2. In the project directory, run `npm start`.
 3. In a second terminal, run `npm run android` (or `cd android && ./gradlew assembleDebug`).
-4. In the app, open the gear on Home, enter the ESP32's current IP address, keep port `81`, and save. Tap **Connect**.
+4. In the app, open the gear on Home, enter the ESP32's current IPv4 address or a public `https://` tunnel URL, then save and tap **Connect**.
 5. The app reports synchronized only after it receives a valid protocol v1 state snapshot.
 
 For a debug build, start Metro in one terminal, then build and install the APK from a second terminal:
@@ -45,7 +45,7 @@ cd ..
 
 Accept the USB debugging prompt on the phone if it appears. The `-r` option reinstalls the APK while preserving the app's local data. The current release build uses the debug signing configuration and is intended for local/device testing, not Play Store distribution.
 
-Use the device's current IP address; it may change between networks or DHCP leases. The endpoint is `ws://<IP>:81`. Android cleartext traffic is enabled for this local WebSocket endpoint.
+For a local connection, enter the device's current IPv4 address; it may change between networks or DHCP leases. The app connects to `ws://<IP>:81` (or the configured port). For an ngrok or Cloudflare Tunnel connection, enter its complete public `https://` URL. The app automatically converts it to `wss://` and preserves its path and explicit port. The tunnel must forward WebSocket traffic to the ESP32's local `ws://<IP>:81` endpoint. Android cleartext traffic is enabled for the local WebSocket endpoint.
 
 ## App behavior
 

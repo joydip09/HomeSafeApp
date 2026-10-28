@@ -27,6 +27,10 @@ The app uses React Native Community CLI 20.2.0 / React Native 0.88.0. Install de
 
 ## Run on Android
 
+### Prebuilt APK
+
+Download the latest prebuilt APK from the [latest GitHub release](https://github.com/joydip09/HomeSafeApp/releases/latest).
+
 1. Connect the phone and ESP32 to the same local Wi-Fi network, or connect the ESP32 to the phone hotspot in station mode.
 2. In the project directory, run `npm start`.
 3. In a second terminal, run `npm run android` (or `cd android && ./gradlew assembleDebug`).

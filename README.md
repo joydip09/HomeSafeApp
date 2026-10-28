@@ -2,6 +2,20 @@
 
 Native Android companion app for the HomeSafe ESP32-S3 terminal. The app connects directly to the device on the same Wi-Fi network and has no cloud service or account requirement. Sensor interpretation, security decisions, and the physical alarm remain on the ESP32.
 
+## Gallery
+
+| Home | Environment | Environment detail |
+|---|---|---|
+| <img src="docs/images/home.png" alt="Home" width="220"> | <img src="docs/images/environment.png" alt="Environment" width="220"> | <img src="docs/images/environment_2.png" alt="Environment detail" width="220"> |
+
+| Security | Security alarm | Logs |
+|---|---|---|
+| <img src="docs/images/security.png" alt="Security" width="220"> | <img src="docs/images/security_alarm.png" alt="Security alarm" width="220"> | <img src="docs/images/logs.png" alt="Logs" width="220"> |
+
+| Settings |
+|---|
+| <img src="docs/images/settings.png" alt="Settings" width="220"> |
+
 ## Requirements
 
 - Node.js 22.11 or newer (the generated React Native 0.88 project requires it)
